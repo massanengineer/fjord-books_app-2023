@@ -1,0 +1,27 @@
+---
+ja:
+  button:
+    new: 新規作成
+    edit: 編集
+    delete: 削除
+    show: 詳細
+    return: 戻る
+  activerecord:
+    models:
+      book: 本
+    attributes:
+      book:
+        title: タイトル
+        memo: メモ
+        author: 著者
+        picture: 写真
+        new: 新規作成
+        edit: 編集
+  helpers:
+    select:
+      prompt: 選択してください
+    submit:
+      create: 登録する
+      submit: 保存する
+      update: 更新する
+      
