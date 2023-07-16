@@ -1,9 +1,9 @@
-<h1><%= Book.human_attribute_name(:new) %></h1>
+<h1><%= t('views.title.new') %></h1>
 
 <%= render "form", book: @book %>
 
 <br>
 
 <nav class="page-nav">
-  <%= link_to t('button.return'), books_path %>
+  <%= link_to t('views.common.return'), books_path %>
 </nav>

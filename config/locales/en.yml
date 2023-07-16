@@ -1,11 +1,15 @@
 ---
 en:
-  button:
-    new: New book
-    edit: Edit this book
-    delete: Destroy this book
-    show: Show this book
-    return: Back to books
+  views:
+    title:
+      new: New
+      edit: Edit
+    common:
+      show: Show this book
+      new: New book
+      edit: Edit this book
+      delete: Destroy this book
+      return: Back to books
   activerecord:
     models:
       book: Book
