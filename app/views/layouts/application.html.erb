@@ -12,11 +12,11 @@
 
   <body class="<%= params[:action] %>">
     <% if user_signed_in? %>
-      Logged in as <strong><%= current_user.email %></strong>
-      <%= link_to 'Profile', user_path(current_user) %>
-      <%= link_to 'User list', users_path %>
-      <%= link_to 'Edit profile', edit_user_registration_path %>
-      <%= link_to "Logout", destroy_user_session_path, method: :delete %>
+      ログイン名 <strong><%= current_user.email %></strong>
+      <%= link_to User.human_attribute_name(:profile), user_path(current_user) %>
+      <%= link_to t('views.common.title_index', name: User.model_name.human), users_path %>
+      <%= link_to t('devise.registrations.edit.title', resource: User.model_name.human), edit_user_registration_path %>
+      <%= link_to t('devise.shared.links.sign_out'), destroy_user_session_path, method: :delete %>
     <% else %>
       <%= link_to "Sign up", new_user_registration_path %>
       <%= link_to "Login", new_user_session_path %>

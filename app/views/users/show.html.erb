@@ -1,10 +1,9 @@
-<h1>Profile</h1>
-<p>Email: <%= @user.email %></p>
-<p>postal_code: <%= @user.postal_code %></p>
-<p>Address: <%= @user.address %></p>
-<p>Profile: <%= @user.profile %></p>
+<h1><%= User.human_attribute_name(:profile) %></h1>
+<p><%= User.human_attribute_name(:email) %><%= @user.email %></p>
+<p><%= User.human_attribute_name(:postal_code) %><%= @user.postal_code %></p>
+<p><%= User.human_attribute_name(:address) %><%= @user.address %></p>
+<p><%= User.human_attribute_name(:profile) %><%= @user.profile %></p>
 
 <% if @user == current_user %>
-<%= link_to 'Edit', edit_user_registration_path %>
-<%= link_to 'Delete', user_registration_path, data: { confirm: 'are you sure?' }, method: :delete %>
+<%= link_to t('views.common.edit'), edit_user_registration_path %>
 <% end %>

@@ -10,7 +10,7 @@ class ApplicationController < ActionController::Base
     devise_parameter_sanitizer.permit(:account_update, keys: %i[postal_code address profile])
   end
 
-  def after_sign_out_path_for
+  def after_sign_out_path_for(_resource)
     new_user_session_path # ログアウト後の遷移先を指定
   end
 end
