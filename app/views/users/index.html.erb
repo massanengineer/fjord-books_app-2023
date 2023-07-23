@@ -1,0 +1,29 @@
+<h1>User list</h1>
+
+<table>
+  <thead>
+    <tr>
+      <th>Email</th>
+      <th>postal_code</th>
+      <th>Address</th>
+      <th>Profile</th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @users.each do |user| %>
+    <tr>
+      <td><%= user.email %></td>
+      <td><%= user.postal_code %></td>
+      <td><%= user.address %></td>
+      <td><%= user.profile %></td>
+      <td><%= link_to 'Show', user_path(user) %></td>
+      <% if user == current_user %>
+      <td><%= link_to 'Edit', edit_user_registration_path %></td>
+      <% end %>
+    </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<%= paginate @users %>

@@ -1,0 +1,10 @@
+<h1>Profile</h1>
+<p>Email: <%= @user.email %></p>
+<p>postal_code: <%= @user.postal_code %></p>
+<p>Address: <%= @user.address %></p>
+<p>Profile: <%= @user.profile %></p>
+
+<% if @user == current_user %>
+<%= link_to 'Edit', edit_user_registration_path %>
+<%= link_to 'Delete', user_registration_path, data: { confirm: 'are you sure?' }, method: :delete %>
+<% end %>
