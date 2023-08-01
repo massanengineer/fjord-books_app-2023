@@ -1,11 +1,11 @@
 # frozen_string_literal: true
 
-class Books::CommentsController < CommentsController
+class Reports::CommentsController < CommentsController
   before_action :set_commentable
 
   private
 
   def set_commentable
-    @commentable = Book.find(params[:book_id])
+    @commentable = Report.find(params[:report_id])
   end
 end

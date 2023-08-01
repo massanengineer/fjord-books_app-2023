@@ -1,0 +1,19 @@
+<div class="comments-container">
+  <strong>Comment :</strong>
+  <% if comments.any? %>
+    <ul>
+      <% comments.each do |comment| %>
+      <li>
+        <%= comment.content %>
+          <p>(<%= link_to comment.user.name_or_email, comment.user %>)
+            (<%= l comment.created_at, format: :short %>)</p>
+            <% if current_user == comment.user %>
+              <%= button_to t('views.common.destroy', name: Comment.model_name.human.downcase), polymorphic_path([commentable, comment]), method: :delete %>
+            <% end %>
+      </li>
+      <% end %>
+    </ul>
+  <% else %>
+    (<%= t('.no_comments') %>)
+  <% end %>
+</div>
