@@ -1,8 +1,11 @@
-<p style="color: green"><%= notice %></p>
+<div class="show-item">
+  <%= render @report %>
+  <%= render partial: 'comments/form', locals: { commentable: @report, comment: @comment } %>
+  <%= render partial: 'comments/comments', locals: { commentable: @report, comments: @comments } %>
 
-<%= render @report %>
+</div>
 
-<div>
+<div class="page-nav">
   <%= link_to "Edit this report", edit_report_path(@report) %> |
   <%= link_to "Back to reports", reports_path %>
 
