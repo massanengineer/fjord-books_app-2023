@@ -182,6 +182,10 @@ ja:
       short: "%m/%d %H:%M"
     pm: 午後
   views:
+    comments:
+      create: コメントをする
+      delete: コメントを消す
+      no_comments: コメントなし
     common:
       show: "この%{name}を表示"
       edit: "この%{name}を編集"
