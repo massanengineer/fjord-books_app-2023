@@ -25,4 +25,10 @@
     <%= user.self_introduction %>
   </p>
 
+  <p>
+    <strong><%= User.human_attribute_name(:avatar) %>:</strong>
+    <% if user.avatar.attached? %>
+      <%= image_tag user.avatar.variant( resize: "50x50") %>
+    <% end %>
+  </p>
 </div>
