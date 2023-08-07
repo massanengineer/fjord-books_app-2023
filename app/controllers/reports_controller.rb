@@ -20,8 +20,14 @@ class ReportsController < ApplicationController
 
   def create
     @report = current_user.reports.new(report_params)
+    host_url = "http://localhost:3000/"
 
     if @report.save
+      if @report.content.include?(host_url) 
+        mentioned_params = @report.content.scan(/http:\/\/localhost:3000\/reports\/(\d+)/).uniq.flatten 
+        @mention = Mention.new(mentioning_report_id: @report.id, mentioned_report_id: mentioned_params[0].to_s) 
+        @mention.save 
+      end 
       redirect_to @report, notice: t('controllers.common.notice_create', name: Report.model_name.human)
     else
       render :new, status: :unprocessable_entity
@@ -30,6 +36,7 @@ class ReportsController < ApplicationController
 
   def update
     if @report.update(report_params)
+      
       redirect_to @report, notice: t('controllers.common.notice_update', name: Report.model_name.human)
     else
       render :edit, status: :unprocessable_entity
