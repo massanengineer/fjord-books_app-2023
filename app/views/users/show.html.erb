@@ -1,0 +1,9 @@
+<h1><%= User.human_attribute_name(:profile) %></h1>
+<p><%= User.human_attribute_name(:email) %><%= @user.email %></p>
+<p><%= User.human_attribute_name(:postal_code) %><%= @user.postal_code %></p>
+<p><%= User.human_attribute_name(:address) %><%= @user.address %></p>
+<p><%= User.human_attribute_name(:profile) %><%= @user.profile %></p>
+
+<% if @user == current_user %>
+<%= link_to t('views.common.edit'), edit_user_registration_path %>
+<% end %>
