@@ -20,11 +20,11 @@ class ReportsController < ApplicationController
 
   def create
     @report = current_user.reports.new(report_params)
-    #host = "http://localhost:3000/"
     if @report.save
       if @report.content.include?("http://localhost:3000")
         mentioned_ids = @report.content.scan(%r{http://localhost:3000/reports/(\d+)}).flatten.uniq
         mentioned_ids.each do |mentioned_id|
+
           @mention = Mention.new(mentioning_report_id: @report.id, mentioned_report_id: mentioned_id.to_i)
           @mention.save
         end
@@ -37,6 +37,28 @@ class ReportsController < ApplicationController
 
   def update
     if @report.update(report_params)
+      if @report.content.include?("http://localhost:3000")
+        mentioned_ids = @report.content.scan(%r{http://localhost:3000/reports/(\d+)}).flatten.uniq
+  
+        # 新しい関連付けを追加
+        mentioned_ids.each do |mentioned_id|
+          mentioned_report = Report.find_by(id: mentioned_id.to_i)
+          if mentioned_report.present?
+            @report.mentioning_reports << mentioned_report unless @report.mentioning_reports.include?(mentioned_report)
+          end
+        end
+  
+        # 関連付けの削除
+        @report.mentioning_reports.each do |mentioning_report|
+          unless mentioned_ids.include?(mentioning_report.id.to_s)
+            mentioning_report.destroy
+          end
+        end
+      else
+        # メンションが含まれない場合は、すべての関連付けを削除
+        @report.mentioning_reports.clear
+      end
+  
       redirect_to @report, notice: t('controllers.common.notice_update', name: Report.model_name.human)
     else
       render :edit, status: :unprocessable_entity
