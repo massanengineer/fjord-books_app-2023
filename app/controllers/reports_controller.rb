@@ -80,7 +80,9 @@ class ReportsController < ApplicationController
   def destroy_mentions
     mentioned_ids = @report.content.scan(%r{http://localhost:3000/reports/(\d+)}).flatten.uniq
     @report.mentioning_reports.each do |mentioning_report|
-      mentioning_report.destroy unless mentioned_ids.include?(mentioning_report.id.to_s)
+      unless mentioned_ids.include?(mentioning_report.id.to_s)
+        @report.mentioning_reports.delete(mentioning_report)
+      end
     end
   end
 end
