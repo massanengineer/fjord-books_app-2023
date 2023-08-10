@@ -4,7 +4,7 @@
     <ul>
       <% mentioned_reports.each do |mentioned_report| %>
         <li>
-          <%= mentioned_report.title %>
+          <%= link_to mentioned_report.title, mentioned_report %>
           <small>
             (<%= link_to mentioned_report.user.name_or_email, mentioned_report.user %> - <%= l mentioned_report.created_at, format: :short %>)
           </small>
