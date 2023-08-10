@@ -6,13 +6,12 @@ class Report < ApplicationRecord
 
   validates :title, presence: true
   validates :content, presence: true
-            #　中間テーブルMentionのモデル名                                       # あとで外部キー
-  has_many :active_mentions, class_name: 'Mention', foreign_key: :mentioning_report_id, dependent: :destroy
-  has_many :passive_mentions, class_name: 'Mention', foreign_key: :mentioned_report_id, dependent: :destroy
-            # Reportテーブルのモデル名　mention.rbで名前を変えてある
+
+  has_many :active_mentions, class_name: 'Mention', foreign_key: :mentioning_report_id, dependent: :destroy, inverse_of: :mentioning_report
+  has_many :passive_mentions, class_name: 'Mention', foreign_key: :mentioned_report_id, dependent: :destroy, inverse_of: :mentioned_report
+
   has_many :mentioning_reports, through: :active_mentions, source: :mentioned_report
   has_many :mentioned_reports, through: :passive_mentions, source: :mentioning_report
-
 
   def editable?(target_user)
     user == target_user
