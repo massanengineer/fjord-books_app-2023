@@ -2,7 +2,6 @@
 
 class ReportsController < ApplicationController
   before_action :set_report, only: %i[edit update destroy]
-  before_action :add_new_mentions, :destroy_mentions, only: %i[update]
 
   def index
     @reports = Report.includes(:user).order(id: :desc).page(params[:page])
@@ -81,7 +80,7 @@ class ReportsController < ApplicationController
     mentioned_ids = @report.content.scan(%r{http://localhost:3000/reports/(\d+)}).flatten.uniq
     @report.mentioning_reports.each do |mentioning_report|
       unless mentioned_ids.include?(mentioning_report.id.to_s)
-        @report.mentioning_reports.delete(mentioning_report)
+        @report.mentioning_reports.destroy(mentioning_report)
       end
     end
   end
