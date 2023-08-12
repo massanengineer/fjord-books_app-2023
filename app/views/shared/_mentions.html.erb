@@ -1,5 +1,5 @@
 <div class="comments-container">
-  <strong><%= t('views.reports.mention_list', name: i18n_pluralize(Report.model_name.human)) %>:</strong>
+  <strong><%= t('views.common.mention_list') %>:</strong>
   <% if (mentioned_reports = report.mentioned_reports.order(:id).includes(:user).presence) %>
     <ul>
       <% mentioned_reports.each do |mentioned_report| %>
