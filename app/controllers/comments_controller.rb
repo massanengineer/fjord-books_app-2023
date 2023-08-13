@@ -7,7 +7,7 @@ class CommentsController < ApplicationController
   def create
     @comment = @commentable.comments.build(comment_params)
     @comment.user = current_user
-    @comment.save
+    @comment.save!
     redirect_to @commentable, notice: t('controllers.common.notice_create', name: Comment.model_name.human)
   end
 
