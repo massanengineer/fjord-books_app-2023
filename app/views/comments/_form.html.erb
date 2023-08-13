@@ -1,0 +1,4 @@
+<%= form_with model: [commentable, comment] do |f| %>
+  <%= f.text_field :content, required: true %>
+  <%= f.submit t('views.comments.create') %>
+<% end %>
