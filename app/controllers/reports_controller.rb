@@ -25,7 +25,7 @@ class ReportsController < ApplicationController
         mentioned_ids = @report.content.scan(%r{http://localhost:3000/reports/(\d+)}).flatten.uniq
         mentioned_ids.each do |mentioned_id|
           @mention = Mention.new(mentioning_report_id: @report.id, mentioned_report_id: mentioned_id.to_i)
-          @mention.save
+          @mention.save!
         end
       end
       redirect_to @report, notice: t('controllers.common.notice_create', name: Report.model_name.human)
