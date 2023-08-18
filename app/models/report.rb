@@ -20,4 +20,12 @@ class Report < ApplicationRecord
   def created_on
     created_at.to_date
   end
+
+  def create_mentions
+    mentioned_ids = content.scan(%r{http://localhost:3000/reports/(\d+)}).flatten.uniq
+    mentioned_ids.each do |mentioned_id|
+      mention = active_mentions.new(mentioned_report_id: mentioned_id.to_i)
+      mention.save!
+    end
+  end
 end

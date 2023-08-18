@@ -1,6 +1,6 @@
 <div class="comments-container">
   <strong><%= t('views.common.mention_list') %>:</strong>
-  <% if (mentioned_reports = report.mentioned_reports.order(:id).includes(:user).presence) %>
+  <% if mentioned_reports %>
     <ul>
       <% mentioned_reports.each do |mentioned_report| %>
         <li>

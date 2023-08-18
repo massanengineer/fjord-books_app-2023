@@ -9,6 +9,7 @@ class ReportsController < ApplicationController
 
   def show
     @report = Report.find(params[:id])
+    @mentioned_reports = @report.mentioned_reports.order(:id).includes(:user).presence
   end
 
   # GET /reports/new
@@ -21,13 +22,7 @@ class ReportsController < ApplicationController
   def create
     @report = current_user.reports.new(report_params)
     if @report.save
-      if @report.content.include?('http://localhost:3000')
-        mentioned_ids = @report.content.scan(%r{http://localhost:3000/reports/(\d+)}).flatten.uniq
-        mentioned_ids.each do |mentioned_id|
-          @mention = Mention.new(mentioning_report_id: @report.id, mentioned_report_id: mentioned_id.to_i)
-          @mention.save!
-        end
-      end
+      @report.create_mentions
       redirect_to @report, notice: t('controllers.common.notice_create', name: Report.model_name.human)
     else
       render :new, status: :unprocessable_entity
@@ -36,13 +31,8 @@ class ReportsController < ApplicationController
 
   def update
     if @report.update(report_params)
-      if @report.content.include?('http://localhost:3000')
-        add_new_mentions
-        destroy_mentions
-      else
-        # メンションが含まれない場合は、すべての関連付けを削除
-        @report.mentioning_reports.clear
-      end
+      @report.mentioning_reports.clear
+      @report.create_mentions
 
       redirect_to @report, notice: t('controllers.common.notice_update', name: Report.model_name.human)
     else
@@ -64,24 +54,5 @@ class ReportsController < ApplicationController
 
   def report_params
     params.require(:report).permit(:title, :content)
-  end
-
-  # 新しい関連付けを追加
-  def add_new_mentions
-    mentioned_ids = @report.content.scan(%r{http://localhost:3000/reports/(\d+)}).flatten.uniq
-    mentioned_ids.each do |mentioned_id|
-      mentioned_report = Report.find_by!(id: mentioned_id.to_i)
-      @report.mentioning_reports << mentioned_report if mentioned_report.present? && @report.mentioning_reports.exclude?(mentioned_report) # rubocopのため後置if
-    end
-  end
-
-  # 関連付けの削除
-  def destroy_mentions
-    mentioned_ids = @report.content.scan(%r{http://localhost:3000/reports/(\d+)}).flatten.uniq
-    @report.mentioning_reports.each do |mentioning_report|
-      unless mentioned_ids.include?(mentioning_report.id.to_s)
-        @report.mentioning_reports.destroy(mentioning_report)
-      end
-    end
   end
 end
