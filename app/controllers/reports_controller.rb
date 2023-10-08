@@ -22,7 +22,7 @@ class ReportsController < ApplicationController
   def create
     @report = current_user.reports.new(report_params)
     ActiveRecord::Base.transaction do
-      if @report.save
+      if @report.save!
         @report.create_mentions
         redirect_to @report, notice: t('controllers.common.notice_create', name: Report.model_name.human)
       else
