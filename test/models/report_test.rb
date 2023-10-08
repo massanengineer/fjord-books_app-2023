@@ -12,10 +12,10 @@ class ReportTest < ActiveSupport::TestCase
   test 'editable?' do
     assert_equal true, @report.editable?(@user)
   end
-  
-  test "created_on" do
+
+  test 'created_on' do
     @report.created_at = Time.current
-    assert_equal @report.created_at.to_date, @report.created_on 
+    assert_equal @report.created_at.to_date, @report.created_on
   end
 
   test 'save_mentions' do
@@ -30,10 +30,8 @@ class ReportTest < ActiveSupport::TestCase
 
     mention_report.update!(content: "http://localhost:3000/reports/#{@report2.id}")
     assert_equal [@report, @report2], mention_report.mentioning_reports
-    
+
     mention_report.destroy
     assert_equal [], no_mention_report.mentioned_reports
-  end    
-
-
+  end
 end
