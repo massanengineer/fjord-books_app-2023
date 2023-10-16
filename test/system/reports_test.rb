@@ -34,8 +34,8 @@ class ReportsTest < ApplicationSystemTestCase
     visit report_url(@report)
     click_on 'この日報を編集', match: :first
 
-    fill_in '内容', with: 'あいさつ'
-    fill_in 'タイトル', with: 'こんにちは'
+    fill_in '内容', with: '日報の内容変更完了'
+    fill_in 'タイトル', with: 'システムテスト'
     click_on '更新する'
 
     assert_text '日報が更新されました。'
