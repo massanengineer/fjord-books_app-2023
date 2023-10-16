@@ -34,8 +34,8 @@ class ReportsTest < ApplicationSystemTestCase
     visit report_url(@report)
     click_on 'この日報を編集', match: :first
 
-    fill_in '内容', with: @report.content
-    fill_in 'タイトル', with: @report.title
+    fill_in '内容', with: 'あいさつ'
+    fill_in 'タイトル', with: 'こんにちは'
     click_on '更新する'
 
     assert_text '日報が更新されました。'
@@ -44,8 +44,10 @@ class ReportsTest < ApplicationSystemTestCase
 
   test 'should destroy Report' do
     visit report_url(@report)
+    assert_text 'あいさつ'
     click_on 'この日報を削除', match: :first
 
     assert_text '日報が削除されました。'
+    assert_no_text 'あいさつ'
   end
 end

@@ -1,13 +1,11 @@
 # Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
 
 one:
-  id: 1
   user: alice
-  title: MyString
-  content: MyText
+  title: あいさつ
+  content: こんにちは
 
 two:
-  id: 2
   user: bob
-  title: MyString
-  content: MyText
+  title: 挨拶
+  content: さようなら
