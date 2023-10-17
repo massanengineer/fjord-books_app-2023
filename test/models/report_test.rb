@@ -5,23 +5,25 @@ require 'test_helper'
 class ReportTest < ActiveSupport::TestCase
   setup do
     @report = reports(:one)
-    @report2 = reports(:two)
-    @user = users(:alice)
+    @user_alice = users(:alice)
+    @user_bob = users(:bob)
   end
 
   test '#editable?' do
-    assert @report.editable?(@user)
+    assert @report.editable?(@user_alice)
+    assert_not @report.editable?(@user_bob)
   end
 
   test '#created_on' do
-    assert_equal Time.current.to_date, @report.created_on
+    now = Time.current
+    assert_equal now.to_date, @report.created_on
   end
 
   test '#save_mentions' do
-    no_mention_report = @user.reports.create!(user: users(:alice), title: 'あいさつ', content: 'こんにちは')
+    no_mention_report = @user_alice.reports.create!(user: users(:alice), title: 'あいさつ', content: 'こんにちは')
     assert_equal [], no_mention_report.mentioning_reports
 
-    mention_report = @user.reports.create!(user: users(:alice), title: 'URL添付', content: " http://localhost:3000/reports/#{@report.id}")
+    mention_report = @user_alice.reports.create!(user: users(:alice), title: 'URL添付', content: " http://localhost:3000/reports/#{@report.id}")
     assert_equal [@report], mention_report.mentioning_reports
 
     no_mention_report.update!(content: "http://localhost:3000/reports/#{@report.id}")
