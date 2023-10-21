@@ -39,6 +39,8 @@ class ReportsTest < ApplicationSystemTestCase
     click_on '更新する'
 
     assert_text '日報が更新されました。'
+    assert_text 'システムテスト'
+    assert_text '日報の内容変更完了'
     click_on '日報の一覧に戻る'
   end
 
